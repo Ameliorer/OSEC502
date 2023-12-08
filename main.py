@@ -39,7 +39,7 @@ def recup(nomDossier):
             while content:
                 line = content.split("\n")[0].split(",")  # on sépare les données pour obtenir seulement les chiffres
                 # (pas d'espaces ni de retour à la ligne).
-                line = [int(i) for i in line]  # on crée un tableau qui contient tous les chiffres de la ligne.
+                line = [float(i) for i in line]  # on crée un tableau qui contient tous les chiffres de la ligne.
                 mat.append(line)  # on ajoute cette ligne dans la matrice.
                 content = f.readline()  # on lit la ligne suivante.
 
@@ -66,8 +66,8 @@ def main():
 
 
     # 30% test et 70% entrainement
-    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30)
-    X_test, y_test = hsv_hist('photo447.png', 'eau')
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+    #X_test, y_test = hsv_hist('photo447.png', 'eau')
 
     # affichage des éléments obtenus
     print(f'X : ${X}')
