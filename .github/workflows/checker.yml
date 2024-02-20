@@ -1,0 +1,22 @@
+name: Pull Request Review Checker
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  check_reviews:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Count reviews
+        id: count_reviews
+        run: echo "::set-output name=review_count::$(jq '.review.comments' $GITHUB_EVENT_PATH)"
+
+      - name: Protect master branch
+        if: github.ref == 'refs/heads/master' && steps.count_reviews.outputs.review_count < 2
+        run: |
+          echo "Branch protection failed! This branch needs at least 2 reviews before merging."
+          exit 1
